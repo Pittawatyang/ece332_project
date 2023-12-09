@@ -1,7 +1,9 @@
 #include <Arduino.h>
+#include "touch_display.h"
 
-// put function declarations here:
-int myFunction(int, int);
+// Global constants and variables
+int rawX, rawY;
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -11,11 +13,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.println("Hello World!");
+  Serial.println();
   delay(1000);
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  Serial.print("X: ");
+  Serial.println(readX());
+  Serial.print("Y: "); 
+  Serial.println(readY());
 }
