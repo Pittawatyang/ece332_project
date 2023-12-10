@@ -12,7 +12,22 @@
 #include "touch_display.h"
 
 // Define global constants and variables if needed
+volatile const double Xmax = 920.0;
+volatile const double Xmin = 100.0;
+volatile const double Ymax = 958.0;
+volatile const double Ymin = 65.0;
 
+volatile const double Xresolution = 122;
+volatile const double Yresolution = 167;
+
+volatile const double Xcenter = 519.0;
+volatile const double Ycenter = 508.0;
+
+volatile const double Xconversion = Xresolution / (Xmax - Xmin);
+volatile const double Yconversion = Yresolution / (Ymax - Ymin);
+
+volatile const double XcenterMM = Xcenter * Xconversion;
+volatile const double YcenterMM = Ycenter * Yconversion;
 
 /**
  * Read the X-axis analog raw data from the display
@@ -23,15 +38,16 @@
  *
  * @return int ADC value from the display X-axis
  */
-int readX() {
+double readX() {
     pinMode(Y1, INPUT);
     pinMode(Y2, OUTPUT_OPEN_DRAIN);
     digitalWrite(Y2, HIGH);
     pinMode(X1, OUTPUT); digitalWrite(X1, HIGH);
     pinMode(X2, OUTPUT); digitalWrite(X2, LOW);
-    delay(200);
+    delay(7);
 
-    int rawX = int(float(analogRead(Y1)) / float(AnalogMax / Xresolution));
+    double rawX = double(double(analogRead(Y1)) * Xconversion);
+    // int rawX = int(float(analogRead(Y1)));
     return rawX;
 }
 
@@ -44,14 +60,15 @@ int readX() {
  *
  * @return int ADC value from the display Y-axis
  */
-int readY() {
+double readY() {
     pinMode(X1, INPUT); // Set X1 as Analog Input
     pinMode(X2, OUTPUT_OPEN_DRAIN); // Set X2 as Open Drain
     digitalWrite(X2, HIGH); 
     pinMode(Y1, OUTPUT); digitalWrite(Y1, HIGH); // Set Y1 as 5V
     pinMode(Y2, OUTPUT); digitalWrite(Y2, LOW); // Set Y2 as GND
-    delay(200);
+    delay(7);
 
-    int rawY = int(float(analogRead(X1)) / float(AnalogMax / Yresolution));
+    double rawY = double(double(analogRead(X1)) * Yconversion);
+    // int rawY = int(float(analogRead(X1)));
     return rawY;
 }

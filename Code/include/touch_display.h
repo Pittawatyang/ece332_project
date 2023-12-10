@@ -11,8 +11,11 @@
 
 #define AnalogMax 950.0
 
-#define Xresolution 600.0
-#define Yresolution 800.0
+extern volatile const double XcenterMM;
+extern volatile const double YcenterMM;
+
+// #define Xresolution 600.0
+// #define Yresolution 800.0
 
 
 /**
@@ -22,9 +25,9 @@
  * Y+/Y1 is connected to A2 configured as input Analog
  * Y-/Y2 is connected to A3 configured as open drain
  *
- * @return int ADC value from the display X-axis
+ * @return double in millimeter value on the display X-axis
  */
-int readX();
+double readX();
 /**
  * Read the Y-axis analog raw data from the display
  * X+/X1 is connected to A0 configured as input Analog
@@ -32,8 +35,8 @@ int readX();
  * Y+/Y1 is connected to A2 configured as output 5V
  * Y-/Y2 is connected to A3 configured as output GND
  *
- * @return int ADC value from the display Y-axis
+ * @return double in millimeter value on the display Y-axis
  */
-int readY();
+double readY();
 
 #endif
