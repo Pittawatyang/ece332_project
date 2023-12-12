@@ -15,11 +15,11 @@ double SetpointY, InputY, OutputY;
 
 // Turning parameter for PID
 float kpX = 0.4;
-float kiX = 0.0;
+float kiX = 0.2;
 float kdX = 0.05;
 
 float kpY = 0.4;
-float kiY = 0.0;
+float kiY = 0.2;
 float kdY = 0.04;
 
 // sampling time
@@ -29,6 +29,9 @@ PID xAxisPID(&InputX, &OutputX, &SetpointX, kpX, kiX, kdX, DIRECT);
 PID yAxisPID(&InputY, &OutputY, &SetpointY, kpY, kiY, kdY, DIRECT);
 
 int InputXFiltered, InputYFiltered;
+
+double Xread;
+double Yread;
 
 void setup() {
   // put your setup code here, to run once:
@@ -55,8 +58,17 @@ void setup() {
 
 void loop() {
 
-  InputX = readX() - XcenterMM;
-  InputY = YcenterMM - readY();
+  Xread = readX();
+  Yread = readY();
+
+  Serial.print("X: ");
+  Serial.println(Xread);
+  Serial.print("Y: ");
+  Serial.println(Yread);
+  Serial.println();
+
+  InputX = Xread - XcenterMM;
+  InputY = YcenterMM - Yread;
 
   // // Serial.print("X input: ");
   // // Serial.println(InputX);
